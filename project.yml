@@ -20,6 +20,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.ainotetaker.mac
         GENERATE_INFOPLIST_FILE: "YES"
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.productivity"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_HARDENED_RUNTIME: "YES"
         COMBINE_HIDPI_IMAGES: "YES"
   AINoteTakerTests:

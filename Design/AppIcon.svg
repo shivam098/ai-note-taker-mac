@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256">
+  <title>AI Note Taker: a folded checklist on violet</title>
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#9576f1"/><stop offset=".52" stop-color="#6950cb"/><stop offset="1" stop-color="#3c307f"/>
+    </linearGradient>
+    <linearGradient id="paper" x2=".35" y2="1">
+      <stop stop-color="#fffaf4"/><stop offset="1" stop-color="#eee9ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="14" y="13" width="228" height="228" rx="53" fill="url(#tile)"/>
+  <rect x="15.5" y="14.5" width="225" height="225" rx="51.5" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="3"/>
+  <path d="M66 63l82-10 34 31 12 96q2 15-13 17l-100 13q-15 2-17-13L53 79q-2-14 13-16z" fill="#38266e" opacity=".45"/>
+  <path d="M67 59l83-9 31 32 12 94q2 14-13 16l-99 12q-14 2-16-13L54 75q-2-14 13-16z" fill="#bb9dff"/>
+  <path d="M85 47h64l39 39v96a15 15 0 0 1-15 15H85a15 15 0 0 1-15-15V62a15 15 0 0 1 15-15z" fill="url(#paper)"/>
+  <path d="M149 47v28a11 11 0 0 0 11 11h28z" fill="#c6b8f5"/>
+  <path d="M92 120l11 11 25-29" fill="none" stroke="#5938ad" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="138" y="113" width="31" height="9" rx="4.5" fill="#7057bf"/>
+  <rect x="92" y="151" width="77" height="9" rx="4.5" fill="#8976c2"/>
+  <rect x="92" y="169" width="47" height="7" rx="3.5" fill="#c0b3db"/>
+</svg>
