@@ -22,3 +22,21 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.productivity"
         ENABLE_HARDENED_RUNTIME: "YES"
         COMBINE_HIDPI_IMAGES: "YES"
+  AINoteTakerTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests
+      - Sources/Models.swift
+      - Sources/Store.swift
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: "YES"
+schemes:
+  AINoteTaker:
+    build:
+      targets:
+        AINoteTaker: all
+    test:
+      targets:
+        - AINoteTakerTests

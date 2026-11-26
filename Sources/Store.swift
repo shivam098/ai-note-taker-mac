@@ -6,8 +6,11 @@ import Observation
 final class Store {
     var lists: [TaskList] = []
     var tasks: [TaskItem] = []
+    private(set) var loadError: String?
+    private let fileURL: URL
 
-    init() {
+    init(fileURL: URL = URL.applicationSupportDirectory.appendingPathComponent("ainotetaker.json")) {
+        self.fileURL = fileURL
         load()
     }
 
@@ -73,23 +76,23 @@ final class Store {
 
     // MARK: - Persistence
 
-    private var fileURL: URL {
-        let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return dir.appendingPathComponent("ainotetaker.json")
-    }
-
     func load() {
         do {
             let data = try Data(contentsOf: fileURL)
             let snapshot = try JSONDecoder().decode(Snapshot.self, from: data)
             lists = snapshot.lists
             tasks = snapshot.tasks
-        } catch {
+            loadError = nil
+        } catch let error as CocoaError where error.code == .fileReadNoSuchFile {
             seed()
+            loadError = nil
+        } catch {
+            loadError = error.localizedDescription
         }
     }
 
-    func save() {
+    private func save() {
+        guard loadError == nil else { return }
         let snapshot = Snapshot(lists: lists, tasks: tasks)
         do {
             let dir = fileURL.deletingLastPathComponent()

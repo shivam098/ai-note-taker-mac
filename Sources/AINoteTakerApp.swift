@@ -6,11 +6,23 @@ struct AINoteTakerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .environment(store)
-                .preferredColorScheme(.dark)
-                .tint(.appPrimary)
-                .frame(minWidth: 720, minHeight: 480)
+            Group {
+                if let error = store.loadError {
+                    ContentUnavailableView {
+                        Label("Could not open saved notes", systemImage: "exclamationmark.triangle")
+                    } description: {
+                        Text("\(error)\n\nThe app has not changed your file. Restore a readable copy of ~/Library/Application Support/ainotetaker.json, or move it aside to start with sample lists.")
+                    } actions: {
+                        Button("Try Again", action: store.load)
+                    }
+                } else {
+                    RootView()
+                        .environment(store)
+                }
+            }
+            .preferredColorScheme(.dark)
+            .tint(.appPrimary)
+            .frame(minWidth: 720, minHeight: 480)
         }
         .windowStyle(.titleBar)
     }
