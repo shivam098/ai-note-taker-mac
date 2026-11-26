@@ -1,0 +1,42 @@
+# Real-Mac test results: 2026-11-26
+
+- Mac: MacBook Pro, Apple M1 Max
+- macOS: 27.0.1 (26A434)
+- Xcode: 26.6 (17F113); XcodeGen: 2.46.0
+- App revision: `a30551e66b006620d877b392923fa07a0ad16049`
+- Method: owner confirmed the initial appearance and Light-mode behavior; the remaining checks used local accessibility automation and, where noted, inspection of the saved JSON. The app's pre-test data was restored afterward.
+
+## Build
+
+**Pass:** `xcodegen generate` and `xcodebuild -project AINoteTaker.xcodeproj -target AINoteTaker -configuration Debug build CODE_SIGN_IDENTITY=-` succeeded. Installed and launched the locally signed app. There is no test target or automated test suite in this revision.
+
+## Real-Mac checklist
+
+| # | Result | Notes |
+|---|---|---|
+| 1 | Fail | Owner confirmed the dark window, four sample lists, and Inbox page. At 900 × 532, the sidebar truncated Groceries to `Groceri...`; accessibility showed one open task for each list. [Issue #5](https://github.com/shivam098/ai-note-taker-mac/issues/5). |
+| 2 | Pass | Owner confirmed the app stayed dark with macOS set to Light. |
+| 3 | Pass | Selecting each list changed the page. Down arrow moved Work to Personal when the sidebar was explicitly focused. The owner initially reported arrows did not work; focus was not established in that attempt. |
+| 4 | Fail | Return and + each added a list; empty and spaces-only submissions added none. A new list showed 📋 and 0, but its short name was truncated. [Issue #5](https://github.com/shivam098/ai-note-taker-mac/issues/5). |
+| 5 | Pass | Return and + each added a task. An empty submission added none. |
+| 6 | Pass | A task toggled complete and back; the completed section, strikethrough and count of 0 were visible. Coffee beans was initially complete. |
+| 7 | Pass | Opened a task; the page exposed title, NOTES and SUBTASKS, and Back returned to the previous page. |
+| 8 | Fail | Title editing saved, but Return selected the existing notes text instead of inserting a newline, so further typing replaced it. Shift-Return had the same result. [Issue #2](https://github.com/shivam098/ai-note-taker-mac/issues/2). A task with notes displayed the notes icon. |
+| 9 | Pass | Work started at 0/2; adding and completing a subtask showed 1/3 on the task page and on the list row. A separate child received a nested subtask. |
+| 10 | Pass | Deleting a test parent removed its child and grandchild from the saved data and returned to the list. |
+| 11 | Pass | After quit and reopen, a test list and its 31 open tasks were still present. Removing the saved file while quit restored the four sample lists on launch. Pre-test data was restored afterward. |
+| 12 | Fail | Invalid JSON opened with sample lists; adding a list replaced the invalid file with a new JSON snapshot. [Issue #3](https://github.com/shivam098/ai-note-taker-mac/issues/3). |
+| 13 | Pass | Command-N opened a second window. Adding a task in one updated the other window's list count to 31. |
+| 14 | Pass | Added 30 tasks; the scroll bar moved from 0 to 1 while the add-task field stayed at the same screen position. |
+
+No crashes were observed during these checks. The owner corrected the initial root ownership of the app and first clone; a second clone was used for this report.
+
+## Retest of the four failed checks
+
+On the same Mac, a local build combined [PR #6](https://github.com/shivam098/ai-note-taker-mac/pull/6) (`7a49cb0`), [PR #7](https://github.com/shivam098/ai-note-taker-mac/pull/7) (`6b38907`) and [PR #8](https://github.com/shivam098/ai-note-taker-mac/pull/8) (`72c665a`) on the app revision above. The app ran with a disposable Application Support directory; the checksum of the user's notes file did not change.
+
+| Checks | Retest | Observation |
+|---|---|---|
+| 1, 4: sidebar labels | Pass | A capture of the default window showed the full `Groceries` and newly added `Visual test` labels. |
+| 8: multiline notes | Pass | Typing `First line`, Return, `Second line` left both lines in the editor and saved JSON. Both were still in the editor after relaunch. |
+| 12: damaged data | Pass | The app showed a recovery message instead of editing controls. Try Again left the invalid bytes intact. Moving the fixture aside and retrying opened the sample lists. Two Xcode store tests also passed, including retry with a restored valid snapshot. |
