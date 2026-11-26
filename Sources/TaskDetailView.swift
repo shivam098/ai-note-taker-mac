@@ -39,10 +39,20 @@ struct TaskDetailView: View {
                         .font(.caption).bold()
                         .foregroundStyle(Color.appTextSecondary)
                         .padding(.top, 8)
-                    TextField("Add notes, links, or details…", text: notesBinding, axis: .vertical)
-                        .textFieldStyle(.plain)
+                    TextEditor(text: notesBinding)
+                        .scrollContentBackground(.hidden)
                         .foregroundStyle(Color.appText)
                         .frame(minHeight: 80, alignment: .topLeading)
+                        .accessibilityLabel("Notes")
+                        .overlay(alignment: .topLeading) {
+                            if task.notes.isEmpty {
+                                Text("Add notes, links, or details…")
+                                    .foregroundStyle(Color.appTextMuted)
+                                    .padding(.leading, 5)
+                                    .allowsHitTesting(false)
+                                    .accessibilityHidden(true)
+                            }
+                        }
 
                     HStack {
                         Text("SUBTASKS  \(subs.filter { $0.done }.count)/\(subs.count)")
