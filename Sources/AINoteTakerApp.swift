@@ -62,6 +62,7 @@ struct RootView: View {
                 }
                 .padding(8)
             }
+            .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 360)
         } detail: {
             if let id = selection ?? store.lists.first?.id {
                 NavigationStack {
