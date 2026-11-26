@@ -30,3 +30,13 @@
 | 14 | Pass | Added 30 tasks; the scroll bar moved from 0 to 1 while the add-task field stayed at the same screen position. |
 
 No crashes were observed during these checks. The owner corrected the initial root ownership of the app and first clone; a second clone was used for this report.
+
+## Retest of the four failed checks
+
+On the same Mac, a local build combined [PR #6](https://github.com/shivam098/ai-note-taker-mac/pull/6) (`7a49cb0`), [PR #7](https://github.com/shivam098/ai-note-taker-mac/pull/7) (`6b38907`) and [PR #8](https://github.com/shivam098/ai-note-taker-mac/pull/8) (`72c665a`) on the app revision above. The app ran with a disposable Application Support directory; the checksum of the user's notes file did not change.
+
+| Checks | Retest | Observation |
+|---|---|---|
+| 1, 4: sidebar labels | Pass | A capture of the default window showed the full `Groceries` and newly added `Visual test` labels. |
+| 8: multiline notes | Pass | Typing `First line`, Return, `Second line` left both lines in the editor and saved JSON. Both were still in the editor after relaunch. |
+| 12: damaged data | Pass | The app showed a recovery message instead of editing controls. Try Again left the invalid bytes intact. Moving the fixture aside and retrying opened the sample lists. Two Xcode store tests also passed, including retry with a restored valid snapshot. |
